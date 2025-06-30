@@ -1,8 +1,23 @@
+/* Fondo animado */
 body {
-  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   min-height: 100vh;
   margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 120vw;
+  height: 120vh;
+  background: radial-gradient(circle at 20% 20%, #6366f1 0%, transparent 70%),
+              radial-gradient(circle at 80% 80%, #f472b6 0%, transparent 70%);
+  opacity: 0.18;
+  z-index: 0;
 }
 
 .login-container, .dashboard-container {
@@ -10,66 +25,107 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .login-form, .dashboard-content {
-  background: #fff;
-  padding: 2.5rem 2rem;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px rgba(60, 72, 88, 0.15);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(60, 72, 88, 0.18);
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #e0e7ff;
+  animation: floatCard 1.2s cubic-bezier(.17,.67,.83,.67);
 }
 
-.login-form h2 {
+@keyframes floatCard {
+  0% { transform: translateY(60px) scale(0.95); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.login-form h2, .dashboard-header h1 {
   margin-bottom: 1.5rem;
-  font-weight: 700;
-  color: #4f46e5;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #6366f1;
+  text-shadow: 0 2px 8px #c7d2fe55;
 }
 
 .form-group label {
-  font-weight: 500;
-  color: #374151;
+  font-weight: 600;
+  color: #6366f1;
+  letter-spacing: 0.5px;
 }
 
 .form-group input {
   margin-top: 0.3rem;
+  border-radius: 0.7rem;
+  border: 1.5px solid #c7d2fe;
+  transition: border 0.2s;
+  background: #f8fafc;
+}
+.form-group input:focus {
+  border: 1.5px solid #6366f1;
+  outline: none;
+  background: #fff;
 }
 
 .login-button {
   width: 100%;
   margin-top: 1.2rem;
-  background: #4f46e5;
+  background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   border: none;
-  border-radius: 0.5rem;
-  padding: 0.7rem 0;
-  transition: background 0.2s;
+  border-radius: 0.7rem;
+  padding: 0.8rem 0;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px #6366f155;
+  transition: background 0.2s, transform 0.2s;
 }
-
+.login-button:active {
+  transform: scale(0.97);
+}
 .login-button:disabled {
-  background: #a5b4fc;
+  background: #c7d2fe;
 }
 
 .error-message {
   background: #fee2e2;
   color: #b91c1c;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   padding: 0.7rem;
   margin-bottom: 1rem;
   text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .login-info {
   margin-top: 1.5rem;
   font-size: 0.95rem;
-  color: #6b7280;
+  color: #6366f1;
   background: #f1f5f9;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   padding: 0.7rem;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
+.invalid-feedback {
+  color: #ef4444;
+  font-size: 0.92em;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
+}
+
+/* Dashboard */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -78,26 +134,30 @@ body {
 }
 
 .dashboard-header h1 {
-  color: #4f46e5;
-  font-weight: 700;
+  color: #6366f1;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .logout-button {
-  background: #ef4444;
+  background: linear-gradient(90deg, #f472b6 0%, #6366f1 100%);
   color: #fff;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   padding: 0.5rem 1.2rem;
-  font-weight: 600;
-  transition: background 0.2s;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px #f472b655;
 }
-
 .logout-button:hover {
-  background: #dc2626;
+  background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
+  transform: scale(1.04);
 }
 
 .user-info {
   text-align: center;
+  margin-top: 1.5rem;
 }
 
 .user-avatar img {
@@ -106,9 +166,13 @@ body {
   border-radius: 50%;
   margin-bottom: 1rem;
   border: 3px solid #6366f1;
+  box-shadow: 0 2px 8px #6366f155;
+  background: #fff;
 }
 
 .user-info h2 {
-  color: #6366f1;
+  color: #f472b6;
   margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }

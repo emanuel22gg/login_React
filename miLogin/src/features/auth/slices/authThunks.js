@@ -13,8 +13,8 @@ export const loginUser = createAsyncThunk(
         dispatch(loginSuccess(user));
         return user;
       } else {
-        dispatch(loginFailure('Credenciales incorrectas'));
-        return rejectWithValue('Credenciales incorrectas');
+        dispatch(loginFailure('Usuario no encontrado'));
+        return rejectWithValue('');
       }
     } catch (error) {
       dispatch(loginFailure(error.message));
